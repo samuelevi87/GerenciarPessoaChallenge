@@ -1,22 +1,34 @@
 package com.sl3v1.gerenciarpessoachallenge.pessoa;
 
 import com.sl3v1.gerenciarpessoachallenge.endereco.Endereco;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_pessoa")
 public class Pessoa {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private LocalDate dataNascimento;
-    private Endereco endereco;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pessoa_id")
+    private List<Endereco> enderecos;
 
-    public Pessoa(Long id, String nome, LocalDate dataNascimento, Endereco endereco) {
+    public Pessoa(Long id, String nome, LocalDate dataNascimento, List<Endereco> enderecos) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.endereco = endereco;
+        this.enderecos = enderecos;
+    }
+
+    public Pessoa() {
+
     }
 
     public Long getId() {
@@ -43,12 +55,12 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public List<Endereco> getEnderecos() {
+        return enderecos;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 
     @Override
@@ -57,7 +69,7 @@ public class Pessoa {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", dataNascimento=" + dataNascimento +
-                ", endereco=" + endereco +
+                ", endereco=" + enderecos +
                 '}';
     }
 
@@ -72,7 +84,7 @@ public class Pessoa {
         if (!Objects.equals(nome, pessoa.nome)) return false;
         if (!Objects.equals(dataNascimento, pessoa.dataNascimento))
             return false;
-        return Objects.equals(endereco, pessoa.endereco);
+        return Objects.equals(enderecos, pessoa.enderecos);
     }
 
     @Override
@@ -80,7 +92,7 @@ public class Pessoa {
         int result = id.hashCode();
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
         result = 31 * result + (dataNascimento != null ? dataNascimento.hashCode() : 0);
-        result = 31 * result + (endereco != null ? endereco.hashCode() : 0);
+        result = 31 * result + (enderecos != null ? enderecos.hashCode() : 0);
         return result;
     }
 }

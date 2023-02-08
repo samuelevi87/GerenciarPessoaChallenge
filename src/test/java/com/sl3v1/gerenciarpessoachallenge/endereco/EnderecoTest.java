@@ -47,5 +47,16 @@ class EnderecoTest {
                 .build();
         assertEquals("São Paulo", endereco.getCidade());
     }
+@Test
+    public void deveRetornarTipoEnderecoDoEndereco() {
+        Endereco endereco = new EnderecoBuilder()
+                .comLogradouro("Rua 1")
+                .comCep("12345-678")
+                .comNumero("1")
+                .comCidade("São Paulo")
+                .comTipoEndereco((TipoEndereco.COMERCIAL))
+                .build();
+        assertEquals("COMERCIAL", endereco.getTipoEndereco().toString());
+    }
 
 }

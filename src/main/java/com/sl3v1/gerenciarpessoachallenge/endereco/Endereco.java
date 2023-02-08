@@ -1,20 +1,36 @@
 package com.sl3v1.gerenciarpessoachallenge.endereco;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_endereco")
 public class Endereco {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String logradouro;
     private String cep;
     private String numero;
     private String cidade;
+    @Enumerated(EnumType.ORDINAL)
+    private TipoEndereco tipoEndereco;
+    @Column(name = "principal")
+    private boolean principal;
 
-    public Endereco(Long id, String logradouro, String cep, String numero, String cidade) {
+    public Endereco(Long id, String logradouro, String cep, String numero, String cidade, TipoEndereco tipoEndereco) {
         this.id = id;
         this.logradouro = logradouro;
         this.cep = cep;
         this.numero = numero;
         this.cidade = cidade;
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public Endereco() {
+
     }
 
     public Long getId() {
@@ -57,6 +73,21 @@ public class Endereco {
         this.cidade = cidade;
     }
 
+    public TipoEndereco getTipoEndereco() {
+        return tipoEndereco;
+    }
+    public void setTipoEndereco(TipoEndereco tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
+
     @Override
     public String toString() {
         return "Endereco{" +
@@ -65,6 +96,8 @@ public class Endereco {
                 ", cep='" + cep + '\'' +
                 ", numero='" + numero + '\'' +
                 ", cidade='" + cidade + '\'' +
+                ", tipoEndereco=" + tipoEndereco +
+                ", principal=" + principal +
                 '}';
     }
 
@@ -75,11 +108,13 @@ public class Endereco {
 
         Endereco endereco = (Endereco) o;
 
+        if (principal != endereco.principal) return false;
         if (!id.equals(endereco.id)) return false;
         if (!Objects.equals(logradouro, endereco.logradouro)) return false;
         if (!Objects.equals(cep, endereco.cep)) return false;
         if (!Objects.equals(numero, endereco.numero)) return false;
-        return Objects.equals(cidade, endereco.cidade);
+        if (!Objects.equals(cidade, endereco.cidade)) return false;
+        return tipoEndereco == endereco.tipoEndereco;
     }
 
     @Override
@@ -89,6 +124,8 @@ public class Endereco {
         result = 31 * result + (cep != null ? cep.hashCode() : 0);
         result = 31 * result + (numero != null ? numero.hashCode() : 0);
         result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
+        result = 31 * result + (tipoEndereco != null ? tipoEndereco.hashCode() : 0);
+        result = 31 * result + (principal ? 1 : 0);
         return result;
     }
 }

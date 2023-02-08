@@ -3,13 +3,14 @@ package com.sl3v1.gerenciarpessoachallenge.pessoa;
 import com.sl3v1.gerenciarpessoachallenge.endereco.Endereco;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class PessoaBuilder {
     private Long id;
     private String nome;
     private LocalDate dataNascimento;
-    private Endereco endereco;
+    private List<Endereco> endereco;
 
     public PessoaBuilder comId(Long id) {
         this.id = id;
@@ -26,8 +27,8 @@ public class PessoaBuilder {
         return this;
     }
 
-    public PessoaBuilder comEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public PessoaBuilder comEndereco(List<Endereco> enderecos) {
+        this.endereco = enderecos;
         return this;
     }
 

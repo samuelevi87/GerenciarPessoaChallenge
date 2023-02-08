@@ -8,6 +8,7 @@ public class EnderecoBuilder {
     private String cep;
     private String numero;
     private String cidade;
+    private TipoEndereco tipoEndereco;
 
     public EnderecoBuilder comId(Long id) {
         this.id = id;
@@ -34,10 +35,15 @@ public class EnderecoBuilder {
         return this;
     }
 
+    public EnderecoBuilder comTipoEndereco(TipoEndereco tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+        return this;
+    }
+
     public Endereco build() {
         if (Objects.isNull(logradouro)) {
             throw new NullPointerException("Logradouro não pode ser nulo");
         }
-        return new Endereco(id, logradouro, cep, numero, cidade);
+        return new Endereco(id, logradouro, cep, numero, cidade, tipoEndereco);
     }
 }
