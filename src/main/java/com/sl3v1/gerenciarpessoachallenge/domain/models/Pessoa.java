@@ -1,24 +1,26 @@
-package com.sl3v1.gerenciarpessoachallenge.pessoa;
+package com.sl3v1.gerenciarpessoachallenge.domain.models;
 
-import com.sl3v1.gerenciarpessoachallenge.endereco.Endereco;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_pessoa")
-public class Pessoa {
-
+public class Pessoa implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pessoa_id")
-    private List<Endereco> enderecos;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public Pessoa(Long id, String nome, LocalDate dataNascimento, List<Endereco> enderecos) {
         this.id = id;
@@ -62,6 +64,7 @@ public class Pessoa {
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
+
 
     @Override
     public String toString() {

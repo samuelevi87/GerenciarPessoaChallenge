@@ -1,6 +1,7 @@
-package com.sl3v1.gerenciarpessoachallenge.pessoa;
+package com.sl3v1.gerenciarpessoachallenge.domain.builders;
 
-import com.sl3v1.gerenciarpessoachallenge.endereco.Endereco;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.Endereco;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.Pessoa;
 
 import java.time.LocalDate;
 import java.util.List;

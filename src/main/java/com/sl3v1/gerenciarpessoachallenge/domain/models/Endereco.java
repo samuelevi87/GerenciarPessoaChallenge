@@ -1,12 +1,15 @@
-package com.sl3v1.gerenciarpessoachallenge.endereco;
+package com.sl3v1.gerenciarpessoachallenge.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_endereco")
-public class Endereco {
+public class Endereco implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +20,12 @@ public class Endereco {
     private String cidade;
     @Enumerated(EnumType.ORDINAL)
     private TipoEndereco tipoEndereco;
-    @Column(name = "principal")
+    @Column(name = "endereco_principal")
     private boolean principal;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
 
     public Endereco(Long id, String logradouro, String cep, String numero, String cidade, TipoEndereco tipoEndereco) {
         this.id = id;
@@ -27,6 +34,7 @@ public class Endereco {
         this.numero = numero;
         this.cidade = cidade;
         this.tipoEndereco = tipoEndereco;
+        this.principal = principal;
     }
 
     public Endereco() {

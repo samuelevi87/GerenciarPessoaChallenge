@@ -1,4 +1,8 @@
-package com.sl3v1.gerenciarpessoachallenge.endereco;
+package com.sl3v1.gerenciarpessoachallenge.domain.builders;
+
+import com.sl3v1.gerenciarpessoachallenge.domain.models.Endereco;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.Pessoa;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.TipoEndereco;
 
 import java.util.Objects;
 
@@ -9,6 +13,9 @@ public class EnderecoBuilder {
     private String numero;
     private String cidade;
     private TipoEndereco tipoEndereco;
+    private boolean principal;
+    private Pessoa pessoa;
+
 
     public EnderecoBuilder comId(Long id) {
         this.id = id;
@@ -37,6 +44,15 @@ public class EnderecoBuilder {
 
     public EnderecoBuilder comTipoEndereco(TipoEndereco tipoEndereco) {
         this.tipoEndereco = tipoEndereco;
+        return this;
+    }
+    public EnderecoBuilder enderecoPrincipal(Boolean principal) {
+        this.principal = principal;
+        return this;
+    }
+
+    public EnderecoBuilder daPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
         return this;
     }
 

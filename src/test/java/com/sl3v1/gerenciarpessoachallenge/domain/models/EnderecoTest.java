@@ -1,5 +1,8 @@
-package com.sl3v1.gerenciarpessoachallenge.endereco;
+package com.sl3v1.gerenciarpessoachallenge.domain.models;
 
+import com.sl3v1.gerenciarpessoachallenge.domain.builders.EnderecoBuilder;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.Endereco;
+import com.sl3v1.gerenciarpessoachallenge.domain.models.TipoEndereco;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +50,7 @@ class EnderecoTest {
                 .build();
         assertEquals("São Paulo", endereco.getCidade());
     }
-@Test
+    @Test
     public void deveRetornarTipoEnderecoDoEndereco() {
         Endereco endereco = new EnderecoBuilder()
                 .comLogradouro("Rua 1")
