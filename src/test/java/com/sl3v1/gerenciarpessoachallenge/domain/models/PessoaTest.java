@@ -1,8 +1,6 @@
 package com.sl3v1.gerenciarpessoachallenge.domain.models;
 
 import com.sl3v1.gerenciarpessoachallenge.domain.builders.PessoaBuilder;
-import com.sl3v1.gerenciarpessoachallenge.domain.models.Endereco;
-import com.sl3v1.gerenciarpessoachallenge.domain.models.Pessoa;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

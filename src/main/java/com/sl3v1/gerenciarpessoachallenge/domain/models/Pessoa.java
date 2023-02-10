@@ -1,8 +1,10 @@
 package com.sl3v1.gerenciarpessoachallenge.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_pessoa")
 public class Pessoa implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +22,10 @@ public class Pessoa implements Serializable {
     private String nome;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pessoa_id")
+    @JsonIgnore
     private List<Endereco> enderecos = new ArrayList<>();
 
     public Pessoa(Long id, String nome, LocalDate dataNascimento, List<Endereco> enderecos) {

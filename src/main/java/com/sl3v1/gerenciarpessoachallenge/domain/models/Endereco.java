@@ -3,12 +3,14 @@ package com.sl3v1.gerenciarpessoachallenge.domain.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_endereco")
 public class Endereco implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -18,22 +20,21 @@ public class Endereco implements Serializable {
     private String cep;
     private String numero;
     private String cidade;
-    @Enumerated(EnumType.ORDINAL)
-    private TipoEndereco tipoEndereco;
+
     @Column(name = "endereco_principal")
     private boolean principal;
+
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pessoa_id")
+    @ManyToOne
+    @JoinColumn(name="pessoa_id")
     private Pessoa pessoa;
 
-    public Endereco(Long id, String logradouro, String cep, String numero, String cidade, TipoEndereco tipoEndereco) {
+    public Endereco(Long id, String logradouro, String cep, String numero, String cidade, Boolean principal) {
         this.id = id;
         this.logradouro = logradouro;
         this.cep = cep;
         this.numero = numero;
         this.cidade = cidade;
-        this.tipoEndereco = tipoEndereco;
         this.principal = principal;
     }
 
@@ -81,19 +82,16 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    public TipoEndereco getTipoEndereco() {
-        return tipoEndereco;
-    }
-    public void setTipoEndereco(TipoEndereco tipoEndereco) {
-        this.tipoEndereco = tipoEndereco;
-    }
-
     public boolean isPrincipal() {
         return principal;
     }
 
     public void setPrincipal(boolean principal) {
         this.principal = principal;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
     @Override
@@ -104,7 +102,6 @@ public class Endereco implements Serializable {
                 ", cep='" + cep + '\'' +
                 ", numero='" + numero + '\'' +
                 ", cidade='" + cidade + '\'' +
-                ", tipoEndereco=" + tipoEndereco +
                 ", principal=" + principal +
                 '}';
     }
@@ -122,7 +119,7 @@ public class Endereco implements Serializable {
         if (!Objects.equals(cep, endereco.cep)) return false;
         if (!Objects.equals(numero, endereco.numero)) return false;
         if (!Objects.equals(cidade, endereco.cidade)) return false;
-        return tipoEndereco == endereco.tipoEndereco;
+        return Objects.equals(pessoa, endereco.pessoa);
     }
 
     @Override
@@ -132,8 +129,8 @@ public class Endereco implements Serializable {
         result = 31 * result + (cep != null ? cep.hashCode() : 0);
         result = 31 * result + (numero != null ? numero.hashCode() : 0);
         result = 31 * result + (cidade != null ? cidade.hashCode() : 0);
-        result = 31 * result + (tipoEndereco != null ? tipoEndereco.hashCode() : 0);
         result = 31 * result + (principal ? 1 : 0);
+        result = 31 * result + (pessoa != null ? pessoa.hashCode() : 0);
         return result;
     }
 }
